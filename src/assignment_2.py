@@ -28,10 +28,9 @@ print("Number of partitions:", num_partitions)
 
 #3.Increase the partition size to 5
 credit_card_df_repartition= credit_card_df.repartition(5)#repartition is to increase or decrease the partition
-credit_card_df_repartition.show()
 #4.Decrease the partition size back to its original partition size
 credit_card_df_coalesce= credit_card_df.coalesce(credit_card_df.rdd.getNumPartitions())
-credit_card_df_coalesce.show()
+
 # 5. Create a UDF to mask the credit card number
 def mask_card_number(card_number):
     masked_number = '*' * 12 + card_number[-4:]
