@@ -22,7 +22,7 @@ c.from a list of rows
 **3. Increase the partition size to 5** 
 --To increase or decrease there is a method called repartition
 **4. Decrease the partition size back to its original partition size** 
---This is done by coalesce
+--This is done by coalesce method
 **5.Create a UDF to print only the last 4 digits marking the remaining digits as *** 
 
 Eg: ************4567 
