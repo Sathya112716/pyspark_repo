@@ -1,67 +1,61 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, explode, explode_outer, posexplode, current_date, year, month, day
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+from pyspark.sql.functions import *
 
+# Function to create a Spark session
+def spark_session():
+    spark = SparkSession.builder.appName("spark-assignment").getOrCreate()
+    return spark
 
-def read_json_file(spark, file_path):
-    return spark.read.json("C:\\Users\\SathyaPriyaR\\Desktop\\pyspark_ass\\pyspark_repo\\resources\\nested_json_file (2).json")
+# Function to read JSON file
+def read_json(spark, path):
+    df = spark.read.json(path, multiLine=True)
+    return df
 
-
-def flatten_dataframe(df):
-    # Define custom schema
-    schema = StructType([
-        StructField("id", IntegerType(), True),
-        StructField("name", StringType(), True),
-        StructField("store_size", StringType(), True),
-        StructField("employee_id", IntegerType(), True),
-        StructField("employee_name", StringType(), True)
-    ])
-    # Flatten the DataFrame using explode
-    flattened_df = df.select(
-        col("id"),
-        col("properties.name").alias("name"),
-        col("properties.storeSize").alias("store_size"),
-        explode("employees").alias("employee")
-    ).select(
-        col("id"),
-        col("name"),
-        col("store_size"),
-        col("employee.empId").alias("employee_id"),
-        col("employee.empName").alias("employee_name")
-    ).withColumn("employee_id", col("employee_id").cast(IntegerType()))
-
+# Function to flatten the DataFrame
+def flatten_df(df):
+    flattened_df = df.select("*", explode("employees").alias("employee")).selectExpr("*", "employee.*", "properties.*").drop("employees", "employee", "properties")
     return flattened_df
 
+# Function to print record count before and after flattening
+def count_before_after_flatten(df, flattened_df):
+    print("\nBefore Flatten: ", df.count())
+    print("\nAfter Flatten: ", flattened_df.count())
 
-def count_records(df):
-    return df.count()
+# Function to differentiate the difference using explode, explode outer, posexplode functions
+def diff_explode_outer_posexplode(spark):
+    data = [
+        (1, [1, 2, 3]),
+        (2, [4, None, 6]),
+        (3, [])
+    ]
+    df = spark.createDataFrame(data, ["id", "numbers"])
+    print("Original DataFrame:")
+    df.show()
+    exploded_df = df.select("id", explode("numbers").alias("number"))
+    print("Exploded DataFrame:")
+    exploded_df.show()
+    exploded_outer_df = df.select("id", explode_outer("numbers").alias("number"))
+    print("Exploded Outer DataFrame:")
+    exploded_outer_df.show()
+    pos_exploded_df = df.select("id", posexplode("numbers").alias("pos", "number"))
+    print("PosExploded DataFrame:")
+    pos_exploded_df.show()
 
+# Function to filter the DataFrame for empId == 1001
+def filter_employee_with_id(df, id):
+    return df.filter(df['empId'] == id)
 
-def differentiate_with_explode(df):
-    # Explode
-    df_explode = df.select(col("*"), explode("employees").alias("employee"))
-    # Explode outer
-    df_explode_outer = df.select(col("*"), explode_outer("employees").alias("employee_outer"))
-    # Posexplode
-    df_posexplode = df.select(col("*"), posexplode("employees").alias("pos", "employee_pos"))
-
-    return df_explode, df_explode_outer, df_posexplode
-
-
-def filter_by_id(df, id_value):
-    return df.filter(col("id") == id_value)
-
-
-def convert_camel_to_snake_case(df):
-    # Convert column names from camel case to snake case
-    snake_case_df = df.toDF(*[col_name.lower() for col_name in df.columns])
+# Function to convert column names from camel case to snake case
+def to_snake_case(dataframe):
+    snake_case_df = dataframe.toDF(*(col.lower() for col in dataframe.columns))
     return snake_case_df
 
+# Function to add a new column named load_date with the current date
+def add_load_date_with_current_date(df):
+    result = df.withColumn("load_date", current_date())
+    return result
 
-def add_load_date_column(df):
-    return df.withColumn("load_date", current_date())
-
-
-def extract_year_month_day(df):
-    return df.withColumn("year", year("load_date")).withColumn("month", month("load_date")).withColumn("day",
-                                                                                                       day("load_date"))
+# Function to create 3 new columns as year, month, and day from the load_date column
+def add_year_month_day(df):
+    year_month_day_df = df.withColumn("year", year(df.load_date)) .withColumn("month", month(df.load_date)) .withColumn("day", day(df.load_date))
+    return year_month_day_df

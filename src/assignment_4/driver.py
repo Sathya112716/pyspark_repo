@@ -1,42 +1,40 @@
-import logging
-from pyspark.sql import SparkSession
-from util import *
+from pyspark_repo.src.assignment_4.util import *
 
-# Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+def main():
+    # Path to JSON file
+    json_path = r'C:\Users\SathyaPriyaR\Desktop\pyspark_ass\pyspark_repo\resources\nested_json_file (2).json'
 
-# Initialize SparkSession
-spark = SparkSession.builder.appName("JSON Data Analysis").getOrCreate()
+    spark = spark_session()
 
-# Read JSON file
-json_df = read_json_file(spark, "your_json_file_path.json")
+    # Read JSON file
+    df = read_json(spark, json_path)
+    df.show()
 
-# Flatten the DataFrame
-flattened_df = flatten_dataframe(json_df)
+    # Flatten the DataFrame
+    flattened_df = flatten_df(df)
+    flattened_df.show()
 
-# Find record count before and after flattening
-original_count = count_records(json_df)
-flattened_count = count_records(flattened_df)
-difference = flattened_count - original_count
-logger.info("Record count before flattening: %d", original_count)
-logger.info("Record count after flattening: %d", flattened_count)
-logger.info("Difference in record count: %d", difference)
+    # Print record count before and after flattening
+    count_before_after_flatten(df, flattened_df)
 
-# Differentiate using explode functions
-df_explode, df_explode_outer, df_posexplode = differentiate_with_explode(json_df)
+    # Differentiate the difference using explode, explode outer, posexplode functions
+    diff_explode_outer_posexplode(spark)
 
-# Filter by id
-filtered_df = filter_by_id(json_df, 1001)
+    # Filter the DataFrame for empId == 1001
+    filtered_df = filter_employee_with_id(flattened_df, 1001)
+    filtered_df.show()
 
-# Convert column names from camel case to snake case
-snake_case_df = convert_camel_to_snake_case(json_df)
+    # Convert column names from camel case to snake case
+    snake_case_df = to_snake_case(flattened_df)
+    snake_case_df.show()
 
-# Add load_date column
-df_with_load_date = add_load_date_column(json_df)
+    # Add a new column named load_date with the current date
+    load_date_df = add_load_date_with_current_date(snake_case_df)
+    load_date_df.show()
 
-# Extract year, month, and day from load_date column
-df_with_date_columns = extract_year_month_day(df_with_load_date)
+    # Create 3 new columns as year, month, and day from the load_date column
+    year_month_day_df = add_year_month_day(load_date_df)
+    year_month_day_df.show()
 
-# Stop SparkSession
-spark.stop()
+if __name__ == "__main__":
+    main()
