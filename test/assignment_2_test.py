@@ -13,7 +13,7 @@ class TestCreditCardDataFrame(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # Create a SparkSession for testing
+        # Create a SparkSession for testing df
         cls.spark = SparkSession.builder.appName("TestCreditCardDataFrame").getOrCreate()
     @classmethod
     def tearDownClass(cls):
