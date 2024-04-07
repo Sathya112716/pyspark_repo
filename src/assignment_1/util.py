@@ -1,4 +1,4 @@
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+from pyspark.sql.types import *
 from pyspark.sql.functions import *
 def create_purchase_data_df(spark):
     # Defining the schema for purchase_data_df

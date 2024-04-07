@@ -1,6 +1,5 @@
 import logging
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import countDistinct
 
 # Import utility functions
 from util import create_purchase_data_df, create_product_data_df, find_customers_with_only_iphone13, \
@@ -27,4 +26,4 @@ find_customers_upgraded_to_iphone14(purchase_data_df, logger)
 
 # Find customers who bought all models in the new Product Data
 logger.info("Customers who bought all products:")
-find_customers_bought_all_products(purchase_data_df, product_data_df, loggerass)
+find_customers_bought_all_products(purchase_data_df, product_data_df, logger)
