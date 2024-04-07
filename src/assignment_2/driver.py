@@ -22,7 +22,7 @@ credit_card_df_repartition = increase_partitions(credit_card_df, 5)
 # Decrease the partition size back to its original partition size
 credit_card_df_coalesce = decrease_partitions(credit_card_df_repartition)
 
-# Mask credit card numbers using UDF
+# Mask credit card numbers using UDF function
 credit_card_df_masked = mask_credit_card_numbers(credit_card_df)
 
 # Show the masked credit card DataFrame
