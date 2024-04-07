@@ -1,4 +1,4 @@
-from pyspark.sql import SparkSession
+
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType
 from pyspark.sql.functions import avg, col, current_date
 
