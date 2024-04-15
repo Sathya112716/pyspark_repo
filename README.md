@@ -2,25 +2,41 @@
 **Question 1:**
 
 1.Create DataFrame as purchase_data_df,  product_data_df with custom schema with the below data 
-•create_purchase_data_df: 
+
+**•create_purchase_data_df:** 
+
 Creates a DataFrame containing purchase records with columns for customer IDs and product models by defining the schema
-•create_product_data_df: 
+
+**•create_product_data_df:** 
+
 Creates a DataFrame containing product information with a column for product models by defining the schema
 
 2.Find the customers who have bought only iphone13 
-•find_customers_with_only_iphone13: Finds customers who bought only the "iphone13" product model so here we can use filter to display the customer.
+
+**•find_customers_with_only_iphone13:** 
+
+Finds customers who bought only the "iphone13" product model so here we can use filter to display the customer.
 
 3.Find customers who upgraded from product iphone13 to product iphone14 
-•find_customers_upgraded_to_iphone14: 
+
+**•find_customers_upgraded_to_iphone14:** 
+
 oFinds customers who upgraded from the "iphone13" to the "iphone14" product model. 
+
 oHere first we can filter who bought only iphone 13 and iphone 14.
+
 oAnd we can use inner join method so it will display the customer who bought both iphone 13 and iphone 14.
 
 4.Find customers who have bought all models in the new Product Data 
-•find_customers_bought_all_products: 
+
+**•find_customers_bought_all_products:** 
+
 oFinds customers who bought all available products listed in the product data DataFrame.
+
 oIn this we apply aggregate function countDistinct on product models and also groupBy on customer.
+
 oSo,on each customer it will count the product_models and show the customer who bought all products.
+
 
 
 **Question 2:**
