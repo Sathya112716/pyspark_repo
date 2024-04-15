@@ -1,12 +1,11 @@
 ## **Question_1:**
+*1.Create DataFrame as purchase_data_df,  product_data_df with custom schema with the below data 
+2.Find the customers who have bought only iphone13
+--perform the filter function on the particular column
 
-1.Create DataFrame as purchase_data_df,  product_data_df with custom schema with the below data 
+**3.Find customers who upgraded from product iphone13 to product iphone14** 
+--perform the filter function and use join for the upgraded product by customer
 
-2.Find the customers who have bought only iphone13**
-        --perform the filter function on the particular column
-        
-3.Find customers who upgraded from product iphone13 to product iphone14** 
-        --perform the filter function and use join for the upgraded product by customer
         
 **4.Find customers who have bought all models in the new Product Data** 
 --First list all the product without duplicates
