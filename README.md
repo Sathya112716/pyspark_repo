@@ -1,4 +1,3 @@
-# Data Processing Tasks
 
 ## Question 1:
 
