@@ -42,6 +42,8 @@ oSo,on each customer it will count the product_models and show the customer who 
 
 
 
+
+
 **Question 2:**
 
 1.Create a Dataframe as credit_card_df with different read methods 
@@ -81,6 +83,7 @@ oHere I used the udf function by creating the function.
 
 
 
+
 **Question 3:**
 
 1.Create a Data Frame with custom schema creation by using Struct Type and Struct Field 
@@ -112,6 +115,8 @@ oIt extracts the date from time stamp and checks if the difference in days is le
 **•convert_to_login_date**
 
 Converts the timestamp column in a DataFrame to the DateType to extract login dates for analysis.
+
+
 
 
 
@@ -162,6 +167,7 @@ Converts column names from camel case to snake case.
 8.create 3 new columns as year, month, and day from the load_date column
 
 •Extracting Year, Month, Day: Creates new columns for year, month, and day from a "load_date" column in a DataFrame.
+
 
 
 
